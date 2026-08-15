@@ -1,40 +1,37 @@
-// Lightweight interactions: flip card, update preview, and simple heart/confetti effects.
-(function(){
-  const card = document.getElementById('card');
-  const openBtn = document.getElementById('openBtn');
-  const backBtn = document.getElementById('backBtn');
-  const sendBtn = document.getElementById('sendBtn');
-  const toInput = document.getElementById('toInput');
-  const msgInput = document.getElementById('msgInput');
-  const previewTo = document.getElementById('previewTo');
-  const previewMsg = document.getElementById('previewMsg');
-  const effects = document.getElementById('effects');
+// 1. Select DOM elements
+const yesBtn = document.getElementById('yesBtn');
+const noBtn = document.getElementById('noBtn');
+const title = document.getElementById('title');
+const bearDisplay = document.getElementById('bearDisplay');
+const btnGroup = document.getElementById('btnGroup');
 
-  // Flip handlers
-  function flipOn(){
-    card.classList.add('is-flipped');
-    // reveal compose region for assistive tech
-    document.getElementById('compose').hidden = false;
+// 2. Function to move the "No" button away when hovered or touched
+function moveNoButton() {
+  // Generate random X and Y coordinates within a specified range
+  const randomX = Math.floor(Math.random() * 160) - 80;
+  const randomY = Math.floor(Math.random() * 100) - 50;
+
+  // Apply smooth transform position to the "No" button
+  noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+}
+
+// 3. Add event listeners to move the "No" button on hover & touch (for mobile)
+noBtn.addEventListener('mouseover', moveNoButton);
+noBtn.addEventListener('touchstart', moveNoButton);
+
+// 4. Action when the "Yes" button is clicked
+yesBtn.addEventListener('click', () => {
+  // Change text message
+  title.textContent = "I knew it! 🧸❤️";
+
+  // Update display (emoji/image)
+  if (bearDisplay) {
+    bearDisplay.textContent = "🧸🥰";
   }
-  function flipOff(){
-    card.classList.remove('is-flipped');
-    document.getElementById('compose').hidden = true;
-  }
 
-  openBtn.addEventListener('click', flipOn);
-  backBtn.addEventListener('click', flipOff);
-
-  // keyboard: space toggles when card focused
-  card.addEventListener('keydown', (e)=>{
-    if(e.code === 'Space' || e.key === ' '){ e.preventDefault(); card.classList.toggle('is-flipped'); document.getElementById('compose').hidden = !card.classList.contains('is-flipped'); }
-  });
-
-  // Live preview updates with a short typed effect for message (native, simple)
-  let typingTimer = null;
-  function updatePreviewInstant(){
-    previewTo.textContent = 'To: ' + (toInput.value.trim() || '—');
-    previewMsg.textContent = msgInput.value.trim() || 'Your message will appear here...';
-  }
+  // Hide the buttons after selection
+  btnGroup.style.display = 'none';
+});  }
 
   function typePreview(){
     const text = msgInput.value.trim() || 'Your message will appear here...';
