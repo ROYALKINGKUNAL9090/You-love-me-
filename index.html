@@ -1,88 +1,66 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Do You Love Me? 🧸</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
-    body {
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #12131c;
-    }
-    .card {
-      background: linear-gradient(135deg, #212433, #2d3148);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 24px;
-      padding: 40px 30px;
-      text-align: center;
-      width: 320px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-    }
-    .inner-box {
-      background: #fff;
-      padding: 30px 20px;
-      border-radius: 20px;
-    }
-    h2 { color: #ff3366; font-size: 22px; margin-bottom: 15px; }
-    .bear {
-      font-size: 80px;
-      margin: 10px 0;
-      display: inline-block;
-      animation: pulse 1.5s infinite ease-in-out;
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-    }
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 20px;
-      position: relative;
-    }
-    button {
-      padding: 10px 24px;
-      border-radius: 20px;
-      border: none;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .yes-btn { background: #ff3366; color: white; }
-    .no-btn { background: #e0e0e0; color: #333; position: absolute; right: 20px; }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Love Card — Send a Little Love</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <main class="page" aria-live="polite">
+    <section class="card-wrap">
+      <div class="card" id="card" tabindex="0" aria-label="Love card. Press space to flip.">
+        <!-- Front -->
+        <article class="card-face card-front">
+          <h1 class="brand"><span class="logo">❤</span> Love Card</h1>
+          <p class="tag">A little note, with a lot of heart.</p>
+          <button class="btn primary" id="openBtn" aria-controls="compose">Write a message</button>
+          <div class="preview-hero" aria-hidden="true">
+            <svg class="heart-hero" viewBox="0 0 24 24" width="64" height="64" aria-hidden="true">
+              <path fill="currentColor" d="M12 21s-8-5.5-8-11.5S7 2 12 7c5-5 8 1.5 8 2.5S12 21 12 21z"/>
+            </svg>
+          </div>
+        </article>
 
-  <div class="card">
-    <div class="inner-box">
-      <h2 id="text">Do You Love me?</h2>
-      <div class="bear" id="bear">🧸</div>
-      <div class="buttons" id="btnContainer">
-        <button class="yes-btn" onclick="sayYes()">Yes</button>
-        <button class="no-btn" id="noBtn" onmouseover="moveNo()">No</button>
+        <!-- Back: Compose -->
+        <article class="card-face card-back" id="compose" role="region" aria-labelledby="composeTitle" hidden>
+          <h2 id="composeTitle">Compose your message</h2>
+
+          <label class="field">
+            <span class="label">To</span>
+            <input id="toInput" type="text" placeholder="Their name" aria-label="Recipient name">
+          </label>
+
+          <label class="field">
+            <span class="label">Message</span>
+            <textarea id="msgInput" placeholder="Write something sweet..." rows="4" aria-label="Message"></textarea>
+          </label>
+
+          <div class="controls">
+            <button class="btn secondary" id="backBtn">Back</button>
+            <button class="btn primary" id="sendBtn">Send ❤️</button>
+          </div>
+
+          <div class="live-preview" aria-live="polite">
+            <h3 class="preview-title">Preview</h3>
+            <div class="preview-card" id="previewCard" aria-hidden="false">
+              <p class="preview-to" id="previewTo">To: —</p>
+              <p class="preview-msg" id="previewMsg">Your message will appear here...</p>
+            </div>
+          </div>
+        </article>
       </div>
-    </div>
-  </div>
+    </section>
 
-  <script>
-    function moveNo() {
-      const btn = document.getElementById('noBtn');
-      const x = Math.floor(Math.random() * 160) - 80;
-      const y = Math.floor(Math.random() * 100) - 50;
-      btn.style.transform = `translate(${x}px, ${y}px)`;
-    }
+    <!-- transient visual effects container -->
+    <div id="effects" aria-hidden="true"></div>
 
-    function sayYes() {
-      document.getElementById('text').innerText = "I knew it! 🧸❤️";
-      document.getElementById('bear').innerText = "🧸🥰";
-      document.getElementById('btnContainer').style.display = 'none';
-    }
-  </script>
+    <footer class="footer">
+      <small>Made with ❤️</small>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
